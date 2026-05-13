@@ -3,54 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spybose Ultra - Aprendizaje y Mascota</title>
+    <title>Spybose Ultra - Idiomas Primero</title>
     <style>
         :root {
-            --duo-green: #58cc02; --duo-blue: #1cb0f6; --duo-purple: #ce82ff;
-            --duo-orange: #ff9600; --duo-red: #ff4b4b; --duo-border: #e5e5e5;
+            --duo-green: #58cc02; --duo-blue: #1cb0f6; --duo-orange: #ff9600; 
+            --duo-red: #ff4b4b; --duo-border: #e5e5e5;
         }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; color: #3c3c3c; display: flex; flex-direction: column; align-items: center; user-select: none; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fff; display: flex; flex-direction: column; align-items: center; user-select: none; }
         
-        /* HEADER */
         header { width: 100%; max-width: 500px; padding: 15px; border-bottom: 2px solid var(--duo-border); display: flex; justify-content: space-around; position: sticky; top: 0; background: white; z-index: 100; }
         .stat { font-weight: bold; display: flex; align-items: center; gap: 5px; }
 
-        /* CONTENEDOR */
         .container { width: 100%; max-width: 500px; padding-bottom: 100px; min-height: 90vh; }
         .screen { display: none; padding: 20px; text-align: center; animation: fadeIn 0.3s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BARRAS DE ESTADO (POU) */
-        .status-bars { width: 90%; margin: 10px auto; background: #f9f9f9; padding: 10px; border-radius: 15px; border: 1px solid #eee; }
-        .bar-row { display: flex; align-items: center; justify-content: space-between; margin: 5px 0; font-size: 0.8rem; font-weight: bold; }
-        .bar-bg { width: 65%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; }
-        .bar-fill { height: 100%; transition: 0.5s; width: 100%; }
-
-        /* MASCOTA */
-        .avatar-frame { font-size: 6rem; position: relative; height: 180px; width: 180px; display: flex; justify-content: center; align-items: center; margin: 20px auto; background: radial-gradient(circle, #f0f0f0 0%, #fff 70%); border-radius: 50%; border: 4px solid var(--duo-border); }
-        .hat-overlay { position: absolute; top: 10px; font-size: 3rem; z-index: 5; }
-        .sick-overlay { position: absolute; bottom: 30px; right: 30px; font-size: 2rem; display: none; }
-
-        /* RUTA Y NODOS */
+        /* RUTA DE APRENDIZAJE */
         .path-map { display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-        .node { width: 75px; height: 75px; border-radius: 50%; border: none; color: white; font-size: 1.6rem; cursor: pointer; margin: 10px 0; position: relative; transition: 0.1s; z-index: 1; }
-        .node.active-node { background: var(--duo-green); box-shadow: 0 8px 0 #46a302; }
-        .node.locked { background: #e5e5e5; box-shadow: 0 8px 0 #afafaf; cursor: not-allowed; opacity: 0.7; }
-        .node.locked::after { content: '🔒'; position: absolute; font-size: 1rem; bottom: 5px; right: 5px; color: #888; }
-        .connector { width: 10px; height: 25px; background: var(--duo-border); margin: -10px 0; }
+        .node { width: 80px; height: 80px; border-radius: 50%; border: none; color: white; font-size: 1.8rem; cursor: pointer; margin: 15px 0; position: relative; }
+        .node.completed { background: var(--duo-orange); box-shadow: 0 8px 0 #cc7a00; }
+        .node.current { background: var(--duo-green); box-shadow: 0 8px 0 #46a302; }
+        .node.locked { background: #e5e5e5; box-shadow: 0 8px 0 #afafaf; cursor: not-allowed; opacity: 0.6; }
+        .connector { width: 12px; height: 30px; background: var(--duo-border); margin: -15px 0; }
 
-        /* LIGAS */
-        .league-table { background: #f8f8f8; border-radius: 15px; border: 2px solid var(--duo-border); padding: 10px; }
-        .league-row { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #eee; }
-        .league-row.me { background: #e3f2fd; color: var(--duo-blue); font-weight: bold; border-radius: 10px; }
-
-        /* BOTONES */
         .btn { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--duo-border); border-radius: 15px; background: white; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .btn-main { background: var(--duo-green); color: white; border: none; box-shadow: 0 5px 0 #46a302; }
-        .btn-main:active { transform: translateY(3px); box-shadow: none; }
 
-        nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; background: white; border-top: 2px solid var(--duo-border); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
+        /* PROGRESO LECCIÓN */
+        .progress-bar { width: 100%; height: 15px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--duo-green); width: 0%; transition: 0.3s; }
+
+        nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; background: white; border-top: 2px solid var(--duo-border); display: flex; justify-content: space-around; padding: 12px 0; }
         .nav-btn { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #ccc; }
         .nav-btn.active { color: var(--duo-blue); }
     </style>
@@ -59,218 +43,185 @@
 
     <header>
         <div class="stat" style="color:var(--duo-orange)">🔥 <span id="racha-val">0</span></div>
+        <div class="stat" style="color:var(--duo-blue)">💎 <span id="gemas-val">0</span></div>
         <div class="stat" style="color:var(--duo-red)">❤️ <span id="vidas-val">5</span></div>
-        <div class="stat" style="color:var(--duo-blue)">💎 <span id="gemas-val">100</span></div>
     </header>
 
     <div class="container">
-        <!-- PANTALLA MASCOTA -->
-        <div id="scr-pet" class="screen active">
-            <div class="status-bars">
-                <div class="bar-row"><span>🍕 Hambre</span><div class="bar-bg"><div id="bar-h" class="bar-fill" style="background:orange"></div></div></div>
-                <div class="bar-row"><span>😊 Ánimo</span><div class="bar-bg"><div id="bar-a" class="bar-fill" style="background:var(--duo-green)"></div></div></div>
-                <div class="bar-row"><span>🌡️ Salud</span><div class="bar-bg"><div id="bar-s" class="bar-fill" style="background:var(--duo-red)"></div></div></div>
-            </div>
-            <div class="avatar-frame" onclick="petMascot()">
-                <div id="hat-box" class="hat-overlay"></div>
-                <div id="pet-box">🐸</div>
-                <div id="sick-box" class="sick-overlay">🤢</div>
-            </div>
-            <p id="pet-msg">¡Hola! ¿Practicamos hoy?</p>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <button class="btn" onclick="feed()">Comida (💎10)</button>
-                <button class="btn" onclick="heal()">Medicina (💎25)</button>
-            </div>
-            <button class="btn btn-main" onclick="show('scr-catalog')">APRENDER AHORA</button>
+        <div id="scr-catalog" class="screen active">
+            <h2>¿Qué quieres aprender hoy?</h2>
+            <button class="btn" onclick="selectLang('Japonés')">🇯🇵 Japonés</button>
+            <button class="btn" onclick="selectLang('Coreano')">🇰🇷 Coreano</button>
+            <button class="btn" onclick="selectLang('Inglés')">🇺🇸 Inglés</button>
         </div>
 
-        <!-- LIGAS -->
-        <div id="scr-league" class="screen">
-            <h2>Liga de Bronce</h2>
-            <div class="league-table">
-                <div class="league-row"><span>1. 🦊 Zorro Pro</span><span>550 XP</span></div>
-                <div class="league-row me"><span>2. 👤 Tú (Spybose)</span><span id="me-xp">0 XP</span></div>
-                <div class="league-row"><span>3. 🦉 Sabio Duolingo</span><span>420 XP</span></div>
-                <div class="league-row"><span>4. 🐱 Gato Gamer</span><span>210 XP</span></div>
-            </div>
-        </div>
-
-        <!-- CATALOGO IDIOMAS -->
-        <div id="scr-catalog" class="screen">
-            <h2>Elige tu idioma</h2>
-            <button class="btn" onclick="setLang('Inglés')">🇺🇸 Inglés</button>
-            <button class="btn" onclick="setLang('Francés')">🇫🇷 Francés</button>
-            <button class="btn" onclick="setLang('Alemán')">🇩🇪 Alemán</button>
-            <button class="btn" onclick="setLang('Coreano')">🇰🇷 Coreano</button>
-            <button class="btn" onclick="setLang('Portugués')">🇧🇷 Portugués</button>
-            <button class="btn" onclick="setLang('Japonés')">🇯🇵 Japonés</button>
-        </div>
-
-        <!-- RUTA -->
         <div id="scr-path" class="screen">
             <h2 id="path-title">Ruta</h2>
             <div id="map-nodes" class="path-map"></div>
+            <button class="btn" onclick="show('scr-catalog')">Cambiar Idioma</button>
         </div>
 
-        <!-- JUEGO -->
         <div id="scr-game" class="screen">
-            <h3 id="q-txt">...</h3>
+            <div class="progress-bar"><div id="game-progress" class="progress-fill"></div></div>
+            <h3 id="q-txt">Cargando...</h3>
             <div id="opt-box"></div>
         </div>
 
-        <!-- VESTIDOR -->
-        <div id="scr-shop" class="screen">
-            <h3>Vestidor</h3>
-            <div id="shop-preview" style="font-size:3rem; margin-bottom:10px;">🐸</div>
-            <p>Elige tu Mascota</p>
-            <div style="display:flex; overflow-x:auto; gap:10px; padding:10px;" id="shop-pets"></div>
-            <p>Elige Ropa</p>
-            <div style="display:flex; overflow-x:auto; gap:10px; padding:10px;" id="shop-hats"></div>
+        <div id="scr-pet" class="screen">
+            <div id="pet-display" style="font-size: 6rem; margin: 20px;">🐸</div>
+            <p>¡Sigue estudiando para mantenerme feliz!</p>
+            <button class="btn btn-main" onclick="show('scr-catalog')">IR A LECCIÓN</button>
         </div>
     </div>
 
     <nav>
-        <button class="nav-btn active" onclick="show('scr-pet', this)">🐾</button>
-        <button class="nav-btn" onclick="show('scr-path', this)">🏠</button>
-        <button class="nav-btn" onclick="show('scr-league', this)">🏆</button>
+        <button class="nav-btn" onclick="show('scr-pet', this)">🐾</button>
+        <button class="nav-btn active" onclick="show('scr-catalog', this)">🏠</button>
         <button class="nav-btn" onclick="show('scr-shop', this)">👕</button>
     </nav>
 
     <script>
-        // --- BASE DE DATOS DE IDIOMAS ---
-        const vocabulary = {
-            'Inglés': [{q:"Manzana", a:["Apple", "Milk"], c:"Apple"}, {q:"Hola", a:["Hi", "Bye"], c:"Hi"}],
-            'Alemán': [{q:"Agua", a:["Wasser", "Bier"], c:"Wasser"}, {q:"Hola", a:["Hallo", "Nein"], c:"Hallo"}],
-            'Coreano': [{q:"Hola", a:["Annyeong", "Mizu"], c:"Annyeong"}, {q:"Gracias", a:["Gomawo", "Hai"], c:"Gomawo"}],
-            'Francés': [{q:"Hola", a:["Bonjour", "Merci"], c:"Bonjour"}],
-            'Portugués': [{q:"Gracias", a:["Obrigado", "Sim"], c:"Obrigado"}],
-            'Japonés': [{q:"Gato", a:["Neko", "Inu"], c:"Neko"}]
+        // --- BANCO DE DATOS (Aquí puedes añadir las 100 palabras) ---
+        const dictionary = {
+            'Japonés': [
+                {q:"Gato", a:["Neko", "Inu"], c:"Neko"}, {q:"Agua", a:["Mizu", "Ocha"], c:"Mizu"},
+                {q:"Persona", a:["Hito", "Hon"], c:"Hito"}, {q:"Libro", a:["Hon", "Mizu"], c:"Hon"},
+                {q:"Maestro", a:["Sensei", "Gakusei"], c:"Sensei"}, {q:"Estudiante", a:["Gakusei", "Sensei"], c:"Gakusei"},
+                {q:"Amigo", a:["Tomodachi", "Hito"], c:"Tomodachi"}, {q:"Si", a:["Hai", "Iie"], c:"Hai"}
+            ],
+            'Coreano': [
+                {q:"Hola", a:["Annyeong", "Mul"], c:"Annyeong"}, {q:"Agua", a:["Mul", "Uyu"], c:"Mul"},
+                {q:"Leche", a:["Uyu", "Mul"], c:"Uyu"}, {q:"Amigo", a:["Chingu", "Oppa"], c:"Chingu"},
+                {q:"Gracias", a:["Gomawo", "Annyeong"], c:"Gomawo"}, {q:"Si", a:["Ne", "Aniyo"], c:"Ne"}
+            ],
+            'Inglés': [
+                {q:"Perro", a:["Dog", "Cat"], c:"Dog"}, {q:"Manzana", a:["Apple", "Pear"], c:"Apple"}
+            ]
         };
 
-        const pets = ["🐸","🐱","🐶","🦁","🐙","🐬","🐢","🐧","🦖"];
-        const hats = ["","👑","🎩","🎓","👒","🧢","🕶️","🎀"];
-
-        // --- ESTADO ---
+        // --- ESTADO DEL JUEGO ---
         let state = {
             xp: parseInt(localStorage.getItem('sb_xp')) || 0,
-            gemas: parseInt(localStorage.getItem('sb_gemas')) || 100,
+            gemas: parseInt(localStorage.getItem('sb_gemas')) || 0,
             racha: parseInt(localStorage.getItem('sb_racha')) || 0,
+            vidas: 5,
             lastDate: localStorage.getItem('sb_date') || "",
-            level: parseInt(localStorage.getItem('sb_level')) || 1,
-            hunger: 100, love: 100, health: 100, sick: false,
-            lang: 'Inglés'
+            currentLang: "",
+            // Progreso por idioma
+            progress: JSON.parse(localStorage.getItem('sb_prog_lang')) || { 'Japonés': 1, 'Coreano': 1, 'Inglés': 1 }
         };
 
-        // --- LOGICA POU (INTERVALO) ---
-        function updateStats() {
-            document.getElementById('bar-h').style.width = state.hunger + "%";
-            document.getElementById('bar-a').style.width = state.love + "%";
-            document.getElementById('bar-s').style.width = state.health + "%";
-            
-            if(state.health < 30 || state.hunger < 20) {
-                state.sick = true;
-                document.getElementById('sick-box').style.display = 'block';
-                document.getElementById('pet-msg').innerText = "Me siento débil... necesito comida o medicina.";
-            } else {
-                state.sick = false;
-                document.getElementById('sick-box').style.display = 'none';
-            }
+        let session = { currentStep: 0, totalSteps: 5 };
+
+        function selectLang(l) {
+            state.currentLang = l;
+            show('scr-path');
+            renderPath();
         }
-
-        setInterval(() => {
-            state.hunger = Math.max(0, state.hunger - 1);
-            state.love = Math.max(0, state.love - 0.5);
-            if(state.hunger === 0) state.health = Math.max(0, state.health - 2);
-            updateStats();
-        }, 15000);
-
-        function feed() { if(state.gemas >= 10) { state.gemas -= 10; state.hunger = Math.min(100, state.hunger + 30); save(); updateStats(); renderUI(); } }
-        function heal() { if(state.gemas >= 25) { state.gemas -= 25; state.health = 100; save(); updateStats(); renderUI(); } }
-        function petMascot() { state.love = Math.min(100, state.love + 10); document.getElementById('pet-msg').innerText = "¡Gracias por el cariño! ❤️"; updateStats(); }
-
-        // --- RACHA REAL Y LECCIONES ---
-        function setLang(l) { state.lang = l; show('scr-path'); }
 
         function renderPath() {
             const container = document.getElementById('map-nodes');
             container.innerHTML = "";
-            document.getElementById('path-title').innerText = "Ruta de " + state.lang;
+            document.getElementById('path-title').innerText = "Curso de " + state.currentLang;
+            
+            let userLevel = state.progress[state.currentLang];
+
             for(let i=1; i<=5; i++) {
                 const b = document.createElement('button');
-                b.className = i <= state.level ? "node active-node" : "node locked";
+                if(i < userLevel) b.className = "node completed";
+                else if(i === userLevel) b.className = "node current";
+                else b.className = "node locked";
+
                 b.innerText = i === 5 ? "🏆" : i;
-                if(i <= state.level) b.onclick = () => startLesson();
+                if(i <= userLevel) b.onclick = () => startLesson();
+                
                 container.appendChild(b);
-                if(i < 5) { const c = document.createElement('div'); c.className = "connector"; container.appendChild(c); }
+                if(i < 5) {
+                    const c = document.createElement('div');
+                    c.className = "connector";
+                    container.appendChild(c);
+                }
             }
         }
 
         function startLesson() {
-            if(state.sick) return alert("¡Tu mascota está enferma! Cúidala primero.");
+            session.currentStep = 0;
             show('scr-game');
-            let q = vocabulary[state.lang][Math.floor(Math.random() * vocabulary[state.lang].length)];
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if(session.currentStep >= session.totalSteps) {
+                finishLesson();
+                return;
+            }
+
+            document.getElementById('game-progress').style.width = (session.currentStep / session.totalSteps * 100) + "%";
+            
+            let langWords = dictionary[state.currentLang];
+            let q = langWords[Math.floor(Math.random() * langWords.length)];
+            
             document.getElementById('q-txt').innerText = "¿Cómo se dice '" + q.q + "'?";
             const box = document.getElementById('opt-box');
             box.innerHTML = "";
+
             q.a.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = "btn";
                 btn.innerText = opt;
-                btn.onclick = () => { if(opt === q.c) winLesson(); else alert("Error, intenta de nuevo."); };
+                btn.onclick = () => {
+                    if(opt === q.c) {
+                        session.currentStep++;
+                        nextQuestion();
+                    } else {
+                        alert("¡Incorrecto! Inténtalo de nuevo.");
+                        state.vidas--;
+                        renderUI();
+                    }
+                };
                 box.appendChild(btn);
             });
         }
 
-        function winLesson() {
+        function finishLesson() {
+            // Actualizar racha solo si es un nuevo día
             let hoy = new Date().toLocaleDateString();
             if(state.lastDate !== hoy) {
                 state.racha++;
                 state.lastDate = hoy;
                 localStorage.setItem('sb_racha', state.racha);
                 localStorage.setItem('sb_date', hoy);
-                alert("¡Racha de " + state.racha + " días!");
-            } else {
-                alert("Lección completada. ¡Ya cumpliste tu racha hoy, vuelve mañana!");
             }
-            state.xp += 20; state.gemas += 5;
-            if(state.level < 5) state.level++;
-            save(); renderUI(); show('scr-pet');
+
+            // Subir nivel solo del idioma actual
+            state.progress[state.currentLang]++;
+            state.gemas += 10;
+            
+            localStorage.setItem('sb_prog_lang', JSON.stringify(state.progress));
+            localStorage.setItem('sb_gemas', state.gemas);
+            
+            alert("¡Lección completada! Racha: " + state.racha);
+            renderUI();
+            show('scr-path');
+            renderPath();
         }
 
         function show(id, btn) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(btn) { document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active')); btn.classList.add('active'); }
-            if(id === 'scr-path') renderPath();
-            if(id === 'scr-league') document.getElementById('me-xp').innerText = state.xp + " XP";
-        }
-
-        function save() {
-            localStorage.setItem('sb_xp', state.xp);
-            localStorage.setItem('sb_gemas', state.gemas);
-            localStorage.setItem('sb_level', state.level);
+            if(btn) {
+                document.querySelectorAll('.nav-btn').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+            }
         }
 
         function renderUI() {
             document.getElementById('racha-val').innerText = state.racha;
             document.getElementById('gemas-val').innerText = state.gemas;
-            document.getElementById('vidas-val').innerText = "5";
+            document.getElementById('vidas-val').innerText = state.vidas;
         }
 
-        // --- TIENDA ---
-        pets.forEach(p => {
-            let d = document.createElement('div'); d.style="font-size:2.5rem; cursor:pointer;"; d.innerText = p;
-            d.onclick = () => { document.getElementById('pet-box').innerText = p; document.getElementById('shop-preview').innerText = p; };
-            document.getElementById('shop-pets').appendChild(d);
-        });
-        hats.forEach(h => {
-            let d = document.createElement('div'); d.style="font-size:2.5rem; cursor:pointer;"; d.innerText = h || "❌";
-            d.onclick = () => document.getElementById('hat-box').innerText = h;
-            document.getElementById('shop-hats').appendChild(d);
-        });
-
-        renderUI(); updateStats();
+        renderUI();
     </script>
 </body>
 </html>
-<
